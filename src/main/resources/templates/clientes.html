@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Clientes</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        form { margin-bottom: 20px; }
+        input { margin: 5px; padding: 5px; }
+        table { border-collapse: collapse; width: 60%; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .acoes form { display: inline; margin: 0; }
+        .acoes a, .acoes button { margin-right: 6px; }
+    </style>
+</head>
+<body>
+
+    <h2 th:text="${cliente.id == null} ? 'Novo Cliente' : 'Editar Cliente'">Novo Cliente</h2>
+
+    <form th:action="@{/clientes}" th:object="${cliente}" method="POST">
+        <!-- id oculto: vazio no cadastro, preenchido na edição -->
+        <input type="hidden" th:field="*{id}" />
+        <input type="text" th:field="*{nome}" placeholder="Nome" required />
+        <input type="email" th:field="*{email}" placeholder="E-mail" required />
+        <button type="submit" th:text="${cliente.id == null} ? 'Salvar' : 'Atualizar'">Salvar</button>
+        <a th:if="${cliente.id != null}" th:href="@{/clientes}">Cancelar</a>
+    </form>
+
+    <h2>Clientes Cadastrados</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="c : ${clientes}">
+                <td th:text="${c.id}"></td>
+                <td th:text="${c.nome}"></td>
+                <td th:text="${c.email}"></td>
+                <td class="acoes">
+                    <a th:href="@{/clientes/{id}/editar(id=${c.id})}">Editar</a>
+                    <form th:action="@{/clientes/{id}/excluir(id=${c.id})}" method="POST"
+                          onsubmit="return confirm('Excluir este cliente?');">
+                        <button type="submit">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
