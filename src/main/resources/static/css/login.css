@@ -14,32 +14,51 @@ body {
     background-color: #e6e6e6;
 }
 
+/* ---------- Painel esquerdo (escuro) ---------- */
+
 .painel-login {
     background-color: #403e3c;
     color: white;
-    width: 33%;
-    border-top-right-radius: 50%;
-    border-bottom-right-radius: 50%;
+    width: 36%;
+    border-top-right-radius: 60% 50%;
+    border-bottom-right-radius: 60% 50%;
     padding: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     position: relative;
-
 }
 
-.painel-recursos {
-    background-color: #e6e6e6;
-    flex: 1;
-    justify-content: center;
-    padding-left: 300px;
+.cabecalho {
+    position: absolute;
+    top: 150px;
+    left: 40px;
+}
 
+.cabecalho h1 {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.cabecalho .inven {
+    font-family: 'Doto', monospace;
+    font-weight: 300;
+}
+
+.cabecalho p {
+    font-size: 14px;
+    color: #8a7f87;
 }
 
 .painel-login form {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    width: 75%;
+}
+
+.painel-login label {
+    font-size: 14px;
 }
 
 .painel-login input {
@@ -47,15 +66,21 @@ body {
     border-radius: 20px;
     background: transparent;
     color: white;
-    padding: 10px;
+    padding: 6px 10px;
     outline: none;
-
 }
 
 .painel-login input:focus {
     border-color: #4a6cd4;
 }
 
+
+.painel-login input:-webkit-autofill,
+.painel-login input:-webkit-autofill:focus {
+    -webkit-text-fill-color: white;
+    box-shadow: 0 0 0 1000px #403e3c inset;
+    caret-color: white;
+}
 
 .painel-login button {
     width: 80px;
@@ -69,17 +94,44 @@ body {
     right: 0;
     transform: translate(50%, -50%);
     cursor: pointer;
+    font-family: inherit;
+    font-size: 16px;
+    text-transform: uppercase;
+    transition: background-color 0.2s;
 }
 
-.cabecalho {
-    position: absolute;
-    top: 150px;
-    left: 40px;
+.painel-login button:hover {
+    background-color: #2a3d78;
+}
+
+.painel-login button:focus-visible {
+    outline: 3px solid #4a6cd4;
+    outline-offset: 3px;
+}
+
+.painel-recursos {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 200px;
 }
 
 .painel-recursos ul {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 24px;
+}
+
+.painel-recursos li {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #222;
+    font-size: 16px;
+}
+
+.painel-recursos img {
+    flex-shrink: 0;
 }

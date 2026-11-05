@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InvenTI</title>
+    <title>InvenTI - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/login.css">
 </head>
 
@@ -14,32 +15,39 @@
 
         <section class="painel-login">
             <header class="cabecalho">
-                <h1>InvenTI</h1>
+                <h1><span class="inven">Inven</span>TI</h1>
                 <p>Seu patrimônio tecnológico em um só lugar</p>
             </header>
-            
+
             <form>
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username">
+                <input type="text" id="username" name="username" autocomplete="username" required>
 
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password">
-                <button type="submit">Login</button>
+                <input type="password" id="password" name="password" autocomplete="current-password" required>
 
+                <button type="submit">Login</button>
             </form>
         </section>
 
         <section class="painel-recursos">
             <ul>
-                <li>Cadastro de equipamentos de TI</li>
-                <li>Controle de patrimônio por setor</li>
-                <li>Relatórios e histórico de ativos</li>
+                <li>
+                    <img src="images/check.png" alt="" width="24" height="24">
+                    Cadastro de equipamentos de TI
+                </li>
+                <li>
+                    <img src="images/check.png" alt="" width="24" height="24">
+                    Controle de patrimônio por setor
+                </li>
+                <li>
+                    <img src="images/check.png" alt="" width="24" height="24">
+                    Relatórios e histórico de ativos
+                </li>
             </ul>
-
         </section>
 
     </main>
-
 
 </body>
 
