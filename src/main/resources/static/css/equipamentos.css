@@ -1,0 +1,293 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #222;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+/* Texto só para leitores de tela */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+}
+
+/* ---------- Layout geral ---------- */
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: #e6e6e6;
+}
+
+/* ---------- Barra lateral ---------- */
+
+.barra-lateral {
+    width: 240px;
+    flex-shrink: 0;
+    background-color: #1a2850;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.logo .inven {
+    font-family: 'Doto', monospace;
+    font-weight: 300;
+}
+
+.usuario {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    background-color: #fdf3f3;
+    color: #1a2850;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar svg {
+    width: 48px;
+    height: 48px;
+}
+
+.usuario-nome {
+    font-size: 20px;
+}
+
+.usuario-perfil {
+    font-size: 18px;
+    color: #b5bdd6;
+}
+
+.menu {
+    width: 100%;
+    margin-top: 40px;
+}
+
+.menu ul {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.menu a {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 14px 30px;
+    font-size: 17px;
+}
+
+.menu a:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.menu a.ativo {
+    background-color: #243a73;
+}
+
+.menu svg {
+    flex-shrink: 0;
+}
+
+/* ---------- Conteúdo ---------- */
+
+.conteudo {
+    flex: 1;
+    padding: 40px 30px;
+    min-width: 0;
+}
+
+.topo-pagina {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.topo-pagina h2 {
+    font-size: 28px;
+    font-weight: normal;
+}
+
+.contador {
+    margin-top: 4px;
+    font-size: 13px;
+    color: #777;
+}
+
+.btn-novo {
+    background-color: #3b5bdb;
+    color: white;
+    font-size: 13px;
+    padding: 10px 16px;
+    border-radius: 3px;
+}
+
+.btn-novo:hover {
+    background-color: #2f4bc0;
+}
+
+/* ---------- Busca e paginação ---------- */
+
+.barra-ferramentas {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.busca {
+    display: flex;
+    align-items: center;
+    background-color: #fdeaea;
+    border-radius: 20px;
+    padding: 6px 12px;
+}
+
+.busca input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 13px;
+    width: 120px;
+    color: #444;
+}
+
+.busca button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #444;
+    display: flex;
+}
+
+.paginacao {
+    display: flex;
+    border: 1px solid #ccc;
+    background-color: white;
+}
+
+.paginacao a {
+    padding: 8px 14px;
+    font-size: 12px;
+    color: #555;
+    border-right: 1px solid #ccc;
+}
+
+.paginacao a:last-child {
+    border-right: none;
+}
+
+.paginacao a:hover {
+    background-color: #f0f0f0;
+}
+
+.paginacao a.atual {
+    background-color: #2a3fa8;
+    color: white;
+}
+
+/* ---------- Tabela ---------- */
+
+.card-tabela {
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 40px;
+    padding: 20px 14px 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    font-weight: normal;
+    font-size: 14px;
+    color: #666;
+    padding: 6px 10px 8px;
+    border-bottom: 1px solid #aaa;
+    text-align: center;
+}
+
+tbody tr {
+    height: 76px;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #f4f4f4;
+}
+
+tbody td {
+    text-align: center;
+    font-size: 13px;
+    color: #777;
+    padding: 0 10px;
+    vertical-align: middle;
+}
+
+td.modelo {
+    text-align: left;
+    max-width: 200px;
+}
+
+/* Espaço reservado para a foto do equipamento */
+.foto {
+    width: 70px;
+    height: 50px;
+    margin: 0 auto;
+    background-color: #d9d9d9;
+    border-radius: 4px;
+}
+
+/* ---------- Badges de status ---------- */
+
+.status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #222;
+}
+
+.status.ativo {
+    background-color: #b4f5a8;
+}
+
+.status.inativo {
+    background-color: #f28b8b;
+}

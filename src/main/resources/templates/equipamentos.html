@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvenTI - Equipamentos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/equipamentos.css">
+</head>
+
+<body>
+    <div class="layout">
+
+        <!-- ================= BARRA LATERAL ================= -->
+        <aside class="barra-lateral">
+
+            <h1 class="logo"><span class="inven">Inven</span>TI</h1>
+
+            <div class="usuario">
+                <div class="avatar">
+                    <svg viewBox="0 0 24 24" width="48" height="48" fill="currentColor" aria-hidden="true">
+                        <circle cx="12" cy="8" r="4.5"></circle>
+                        <path d="M3.5 21c0-4.5 3.8-7 8.5-7s8.5 2.5 8.5 7v0.5h-17z"></path>
+                    </svg>
+                </div>
+                <p class="usuario-nome">Admin</p>
+                <p class="usuario-perfil">Administrador</p>
+            </div>
+
+            <nav class="menu">
+                <ul>
+                    <li>
+                        <a href="#">
+                            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor"
+                                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M3 11l9-8 9 8"></path>
+                                <path d="M5 10v10h5v-6h4v6h5V10"></path>
+                            </svg>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/equipamentos" class="ativo">
+                            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor"
+                                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+                                <path d="M8 21h8M12 17v4"></path>
+                            </svg>
+                            <span>Equipamentos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor"
+                                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M2 21v-2a5 5 0 0 1 5-5h4"></path>
+                                <path d="M18 14v6M15 17h6"></path>
+                            </svg>
+                            <span>Cadastro</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+        </aside>
+
+        <!-- ================= CONTEÚDO ================= -->
+        <main class="conteudo">
+
+            <header class="topo-pagina">
+                <div>
+                    <h2>Equipamentos</h2>
+                    <p class="contador">128 equipamentos cadastrados</p>
+                </div>
+                <a href="#" class="btn-novo">+ Novo equipamento</a>
+            </header>
+
+            <div class="barra-ferramentas">
+
+                <form class="busca" role="search">
+                    <label for="busca" class="sr-only">Buscar equipamento</label>
+                    <input type="search" id="busca" name="busca" placeholder="Buscar">
+                    <button type="submit" aria-label="Buscar">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                            <circle cx="11" cy="11" r="7"></circle>
+                            <path d="M20 20l-3.5-3.5"></path>
+                        </svg>
+                    </button>
+                </form>
+
+                <nav class="paginacao" aria-label="Paginação">
+                    <a href="#">Início</a>
+                    <a href="#">Fim</a>
+                    <a href="#" class="atual">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">Próximo</a>
+                    <a href="#">Anterior</a>
+                </nav>
+
+            </div>
+
+            <section class="card-tabela">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Imagem</th>
+                            <th>Cod</th>
+                            <th>Categoria</th>
+                            <th>Modelo</th>
+                            <th>Status</th>
+                            <th>Usuário</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><div class="foto"></div></td>
+                            <td>IVT-SWT-006</td>
+                            <td>Switch</td>
+                            <td class="modelo">Switch 8 portas TP-Link TL-SG108 - Gigabit</td>
+                            <td><span class="status ativo">Ativo</span></td>
+                            <td>TI</td>
+                        </tr>
+                        <tr>
+                            <td><div class="foto"></div></td>
+                            <td>IVT-IMP-005</td>
+                            <td>Impressora</td>
+                            <td class="modelo">Impressora EcoTank L6490</td>
+                            <td><span class="status ativo">Ativo</span></td>
+                            <td>RH</td>
+                        </tr>
+                        <tr>
+                            <td><div class="foto"></div></td>
+                            <td>IVT-NTB-001</td>
+                            <td>Notebook</td>
+                            <td class="modelo">Notebook Dell Latitude 3420</td>
+                            <td><span class="status ativo">Ativo</span></td>
+                            <td>flavio.silva</td>
+                        </tr>
+                        <tr>
+                            <td><div class="foto"></div></td>
+                            <td>IVT-MNT-008</td>
+                            <td>Monitor</td>
+                            <td class="modelo">Monitor LG LED 25" Ultrawide</td>
+                            <td><span class="status inativo">Inativo</span></td>
+                            <td>Null</td>
+                        </tr>
+                        <tr>
+                            <td><div class="foto"></div></td>
+                            <td>IVT-MSE-021</td>
+                            <td>Mouse</td>
+                            <td class="modelo">Mouse gamer sem fio Logitech G Pro-2</td>
+                            <td><span class="status ativo">Ativo</span></td>
+                            <td>eduardo.sousa</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+        </main>
+
+    </div>
+</body>
+
+</html>
