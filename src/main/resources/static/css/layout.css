@@ -1,0 +1,142 @@
+/*
+ * Layout base — importado por TODAS as páginas internas (Home, Equipamentos,
+ * Usuários, Cadastro, Solicitações). Aqui ficam só as regras estruturais
+ * (container, menu lateral, perfil, navegação e área de conteúdo), para que
+ * nada mude de tamanho ao trocar de aba. Componentes ficam nos outros CSS.
+ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Mantém a barra de rolagem sempre presente: evita o "salto" lateral de ~15px
+   ao navegar entre telas curtas e telas longas. */
+html {
+    overflow-y: scroll;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #222;
+}
+
+/* Texto só para leitores de tela */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+}
+
+/* ---------- Estrutura ---------- */
+
+.container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #e6e6e6;
+}
+
+.menu-lateral {
+    width: 250px;
+    min-width: 250px;
+    flex: 0 0 250px;
+    min-height: 100vh;
+    background-color: #1a2850;
+    color: white;
+    padding: 30px 0;
+}
+
+.conteudo {
+    flex: 1;
+    width: 100%;
+    min-width: 0; /* deixa tabelas largas rolarem dentro do painel em vez de esticar a página */
+    padding: 40px;
+}
+
+/* ---------- Perfil e navegação (menu lateral) ---------- */
+
+.perfil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: normal;
+    margin-bottom: 30px;
+}
+
+.logo .inven {
+    font-family: 'Doto', monospace;
+    font-weight: 300;
+}
+
+.avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-color: white;
+    margin-bottom: 15px;
+}
+
+.nome {
+    font-size: 20px;
+}
+
+.cargo {
+    font-size: 16px;
+    color: #9a95a0;
+}
+
+.navegacao {
+    margin-top: 40px;
+}
+
+.navegacao ul {
+    list-style: none;
+}
+
+.navegacao a {
+    display: block;
+    padding: 15px 30px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.navegacao a:hover,
+.navegacao a.ativo {
+    background-color: #2a3d78;
+}
+
+/* ---------- Telas menores ---------- */
+
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .menu-lateral {
+        width: 100%;
+        min-width: 0;
+        flex: 0 0 auto;
+        min-height: 0;
+    }
+
+    .conteudo {
+        padding: 20px;
+    }
+
+    .cards-resumo {
+        flex-wrap: wrap;
+    }
+
+    .cards-resumo .card {
+        flex: 1 1 40%;
+    }
+}

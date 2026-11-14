@@ -135,3 +135,11 @@ body {
 .painel-recursos img {
     flex-shrink: 0;
 }
+
+/* ---------- Mensagem de erro do login ---------- */
+
+.mensagem-erro {
+    color: #ff8a80;
+    font-size: 13px;
+    margin-top: 4px;
+}

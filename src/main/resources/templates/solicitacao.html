@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvenTI - Solicitações</title>
+    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/layout.css}">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/formularios.css}">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <aside th:replace="~{fragments/menu :: menu('solicitacao')}"></aside>
+
+        <section class="conteudo">
+
+            <div class="alerta alerta-sucesso" role="status" th:if="${mensagem}" th:text="${mensagem}"></div>
+            <div class="alerta alerta-erro" role="alert" th:if="${erro}" th:text="${erro}"></div>
+
+            <article class="painel">
+                <h2>Nova solicitação</h2>
+                <p class="painel-sub">Peça um equipamento ou suporte. A equipe de TI analisa e atualiza o status abaixo.</p>
+
+                <form class="formulario" th:action="@{/solicitacao}" method="post">
+
+                    <div class="campo">
+                        <label for="categoriaId">Tipo de equipamento <span class="obrigatorio">*</span></label>
+                        <select id="categoriaId" name="categoriaId" required>
+                            <option value="" disabled selected>Selecione</option>
+                            <option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nome}">Notebook</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="setorId">Setor <span class="obrigatorio">*</span></label>
+                        <select id="setorId" name="setorId" required>
+                            <option value="" disabled th:selected="${setorPadraoId == null}">Selecione o setor</option>
+                            <option th:each="s : ${setores}" th:value="${s.id}" th:text="${s.nome}"
+                                th:selected="${setorPadraoId != null and s.id == setorPadraoId}">TI</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="urgencia">Urgência <span class="obrigatorio">*</span></label>
+                        <select id="urgencia" name="urgencia" required>
+                            <option th:each="u : ${urgencias}" th:value="${u.name()}" th:text="${u.rotulo}"
+                                th:selected="${u.name() == 'MEDIA'}">Média</option>
+                        </select>
+                    </div>
+
+                    <div class="campo campo-largo">
+                        <label for="justificativa">Justificativa <span class="obrigatorio">*</span></label>
+                        <textarea id="justificativa" name="justificativa" maxlength="500" required
+                            placeholder="Para que você precisa do equipamento e por quanto tempo?"></textarea>
+                        <span class="campo-dica">Até 500 caracteres.</span>
+                    </div>
+
+                    <div class="acoes-formulario">
+                        <button type="submit" class="btn btn-primario">Enviar solicitação</button>
+                    </div>
+                </form>
+            </article>
+
+            <article class="painel painel-tabela">
+                <h2>Minhas solicitações</h2>
+
+                <div class="tabela-rolavel">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Equipamento</th>
+                                <th>Setor</th>
+                                <th>Urgência</th>
+                                <th>Justificativa</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="s : ${solicitacoes}">
+                                <td class="data" th:text="${#temporals.format(s.dataSolicitacao, 'dd/MM/yyyy HH:mm')}">30/09/2026 10:15</td>
+                                <td th:text="${s.categoria.nome}">Notebook</td>
+                                <td th:text="${s.setor.nome}">RH</td>
+                                <td><span class="status" th:classappend="${s.urgencia.classeCss}" th:text="${s.urgencia.rotulo}">Média</span></td>
+                                <td class="truncar" th:text="${s.justificativa}" th:title="${s.justificativa}">Trabalho remoto</td>
+                                <td><span class="status" th:classappend="${s.status.classeCss}" th:text="${s.status.rotulo}">Pendente</span></td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(solicitacoes)}">
+                                <td colspan="6" class="vazio">Você ainda não fez nenhuma solicitação. Preencha o formulário acima para abrir a primeira.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

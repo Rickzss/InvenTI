@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvenTI - Usuários</title>
+    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/layout.css}">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/formularios.css}">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <aside th:replace="~{fragments/menu :: menu('usuarios')}"></aside>
+
+        <section class="conteudo">
+
+            <div class="alerta alerta-sucesso" role="status" th:if="${mensagem}" th:text="${mensagem}"></div>
+            <div class="alerta alerta-erro" role="alert" th:if="${erro}" th:text="${erro}"></div>
+
+            <section class="cards-resumo">
+
+                <article class="card">
+                    <h2>Total de usuários</h2>
+                    <p class="numero"><span class="ponto verde"></span><span th:text="${total}">25</span></p>
+                </article>
+
+                <article class="card">
+                    <h2>Administradores</h2>
+                    <p class="numero"><span class="ponto azul"></span><span th:text="${administradores}">3</span></p>
+                </article>
+
+                <article class="card">
+                    <h2>Solicitantes</h2>
+                    <p class="numero"><span class="ponto laranja"></span><span th:text="${solicitantes}">20</span></p>
+                </article>
+
+                <article class="card">
+                    <h2>Inativos</h2>
+                    <p class="numero"><span class="ponto vermelho"></span><span th:text="${inativos}">2</span></p>
+                </article>
+
+            </section>
+
+            <!-- Painel de edição: aparece só depois de clicar em "Editar" -->
+            <article class="painel" th:if="${edicao != null}">
+                <h2>Editar usuário</h2>
+                <form class="formulario" th:action="@{/usuarios/{id}/editar(id=${edicao.id})}" method="post">
+
+                    <div class="campo">
+                        <label for="nome">Nome</label>
+                        <input type="text" id="nome" name="nome" maxlength="150" th:value="${edicao.nome}" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" maxlength="150" th:value="${edicao.email}" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="setorId">Setor</label>
+                        <select id="setorId" name="setorId">
+                            <option value="">Sem setor</option>
+                            <option th:each="s : ${setores}" th:value="${s.id}" th:text="${s.nome}"
+                                th:selected="${edicao.setor != null and edicao.setor.id == s.id}">TI</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="perfil">Perfil de acesso</label>
+                        <select id="perfil" name="perfil">
+                            <option th:each="p : ${perfis}" th:value="${p.name()}" th:text="${p.rotulo}"
+                                th:selected="${edicao.perfil == p}">Solicitante</option>
+                        </select>
+                        <span class="campo-dica" th:if="${edicao.id == usuarioLogado.id}">
+                            O seu próprio perfil não pode ser alterado.
+                        </span>
+                    </div>
+
+                    <div class="campo">
+                        <label for="senha">Nova senha</label>
+                        <input type="password" id="senha" name="senha" minlength="6" autocomplete="new-password">
+                        <span class="campo-dica">Deixe em branco para manter a senha atual.</span>
+                    </div>
+
+                    <div class="acoes-formulario">
+                        <button type="submit" class="btn btn-primario">Salvar alterações</button>
+                        <a th:href="@{/usuarios}" class="btn btn-secundario">Cancelar</a>
+                    </div>
+                </form>
+            </article>
+
+            <article class="painel painel-tabela">
+                <h2>Usuários cadastrados</h2>
+
+                <div class="tabela-rolavel">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>E-mail</th>
+                                <th>Setor</th>
+                                <th>Perfil de acesso</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="u : ${usuarios}">
+                                <td th:text="${u.nome}">Admin</td>
+                                <td th:text="${u.email}">admin@inventi.com</td>
+                                <td th:text="${u.setor != null ? u.setor.nome : '-'}">TI</td>
+                                <td><span class="status" th:classappend="${u.perfil.classeCss}" th:text="${u.perfil.rotulo}">Administrador</span></td>
+                                <td>
+                                    <span class="status"
+                                        th:classappend="${u.ativo} ? 'status-ativo' : 'status-inativo'"
+                                        th:text="${u.ativo} ? 'Ativo' : 'Inativo'">Ativo</span>
+                                </td>
+                                <td>
+                                    <div class="tabela-acoes">
+                                        <a th:href="@{/usuarios/{id}/editar(id=${u.id})}" class="btn btn-secundario btn-pequeno">Editar</a>
+                                        <form th:unless="${u.id == usuarioLogado.id}"
+                                            th:action="@{/usuarios/{id}/alternar-status(id=${u.id})}" method="post">
+                                            <button type="submit" class="btn btn-pequeno"
+                                                th:classappend="${u.ativo} ? 'btn-perigo' : 'btn-primario'"
+                                                th:text="${u.ativo} ? 'Inativar' : 'Reativar'">Inativar</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(usuarios)}">
+                                <td colspan="6" class="vazio">Nenhum usuário cadastrado. Use a tela de Cadastro para adicionar o primeiro.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvenTI - Cadastro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/layout.css}">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/formularios.css}">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <aside th:replace="~{fragments/menu :: menu('cadastro')}"></aside>
+
+        <section class="conteudo">
+
+            <div class="alerta alerta-sucesso" role="status" th:if="${mensagem}" th:text="${mensagem}"></div>
+            <div class="alerta alerta-erro" role="alert" th:if="${erro}" th:text="${erro}"></div>
+
+            <article class="painel">
+                <h2>Cadastro</h2>
+
+                <nav class="abas" aria-label="Tipo de cadastro">
+                    <a th:href="@{/cadastro(aba='equipamento')}" class="aba"
+                        th:classappend="${aba == 'equipamento'} ? 'ativa'">Equipamento</a>
+                    <a th:href="@{/cadastro(aba='usuario')}" class="aba"
+                        th:classappend="${aba == 'usuario'} ? 'ativa'">Usuário do sistema</a>
+                </nav>
+
+                <!-- ===== Novo equipamento ===== -->
+                <form class="formulario" th:if="${aba == 'equipamento'}" th:action="@{/cadastro/equipamento}" method="post">
+
+                    <div class="campo">
+                        <label for="nome">Nome do equipamento <span class="obrigatorio">*</span></label>
+                        <input type="text" id="nome" name="nome" maxlength="150" placeholder="Ex: Dell Latitude 3450" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="patrimonio">Código <span class="obrigatorio">*</span></label>
+                        <input type="text" id="patrimonio" name="patrimonio" maxlength="50" placeholder="Ex: IVT-NTB-021" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="categoriaId">Tipo de equipamento <span class="obrigatorio">*</span></label>
+                        <select id="categoriaId" name="categoriaId" required>
+                            <option value="" disabled selected>Selecione</option>
+                            <option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nome}">Notebook</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="setorId">Setor <span class="obrigatorio">*</span></label>
+                        <select id="setorId" name="setorId" required>
+                            <option value="" disabled selected>Selecione o setor</option>
+                            <option th:each="s : ${setores}" th:value="${s.id}" th:text="${s.nome}">TI</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="marca">Marca</label>
+                        <input type="text" id="marca" name="marca" maxlength="100" placeholder="Ex: Dell">
+                    </div>
+
+                    <div class="campo">
+                        <label for="modelo">Modelo</label>
+                        <input type="text" id="modelo" name="modelo" maxlength="100" placeholder="Ex: Latitude 3450">
+                    </div>
+
+                    <div class="campo">
+                        <label for="status">Status <span class="obrigatorio">*</span></label>
+                        <select id="status" name="status" required>
+                            <option th:each="s : ${statusList}" th:value="${s.name()}" th:text="${s.rotulo}"
+                                th:selected="${s.name() == 'ATIVO'}">Ativo</option>
+                        </select>
+                    </div>
+
+                    <div class="acoes-formulario">
+                        <button type="submit" class="btn btn-primario">Salvar equipamento</button>
+                        <a th:href="@{/equipamentos}" class="btn btn-secundario">Cancelar</a>
+                    </div>
+                </form>
+
+                <!-- ===== Novo usuário do sistema ===== -->
+                <form class="formulario" th:if="${aba == 'usuario'}" th:action="@{/cadastro/usuario}" method="post">
+
+                    <div class="campo">
+                        <label for="nomeUsuario">Nome <span class="obrigatorio">*</span></label>
+                        <input type="text" id="nomeUsuario" name="nome" maxlength="150" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="email">E-mail <span class="obrigatorio">*</span></label>
+                        <input type="email" id="email" name="email" maxlength="150" autocomplete="off" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="senha">Senha inicial <span class="obrigatorio">*</span></label>
+                        <input type="password" id="senha" name="senha" minlength="6" autocomplete="new-password" required>
+                        <span class="campo-dica">Mínimo de 6 caracteres.</span>
+                    </div>
+
+                    <div class="campo">
+                        <label for="setorUsuario">Setor</label>
+                        <select id="setorUsuario" name="setorId">
+                            <option value="">Sem setor</option>
+                            <option th:each="s : ${setores}" th:value="${s.id}" th:text="${s.nome}">TI</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="perfil">Perfil de acesso <span class="obrigatorio">*</span></label>
+                        <select id="perfil" name="perfil" required>
+                            <option th:each="p : ${perfis}" th:value="${p.name()}" th:text="${p.rotulo}"
+                                th:selected="${p.name() == 'USUARIO'}">Solicitante</option>
+                        </select>
+                        <span class="campo-dica">Solicitantes só acessam a tela de Solicitações.</span>
+                    </div>
+
+                    <div class="acoes-formulario">
+                        <button type="submit" class="btn btn-primario">Salvar usuário</button>
+                        <a th:href="@{/usuarios}" class="btn btn-secundario">Cancelar</a>
+                    </div>
+                </form>
+
+            </article>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

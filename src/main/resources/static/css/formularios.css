@@ -1,0 +1,261 @@
+/*
+ * Complemento do dashboard.css (carregado depois de layout.css e dashboard.css): formulários, abas, alertas, botões e badges
+ * extras usados em cadastro.html, usuarios.html e solicitacao.html.
+ * Paleta herdada de login.css / dashboard.css:
+ *   #1a2850 azul escuro | #2a3d78 azul hover | #4a6cd4 azul claro
+ *   #e6e6e6 fundo       | #8a7f87 texto suave
+ */
+
+/* ---------- Espaçamento entre blocos do conteúdo ---------- */
+
+.conteudo > .alerta,
+.conteudo > .cards-resumo,
+.conteudo > .painel {
+    margin-bottom: 25px;
+}
+
+.conteudo > .painel-tabela {
+    margin-top: 0;
+}
+
+.painel-sub {
+    font-size: 13px;
+    color: #8a7f87;
+    margin: -8px 0 18px;
+}
+
+/* ---------- Alertas ---------- */
+
+.alerta {
+    padding: 12px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    border: 1px solid transparent;
+}
+
+.alerta-sucesso {
+    background-color: #d9f7e0;
+    border-color: #2ecc40;
+    color: #14532d;
+}
+
+.alerta-erro {
+    background-color: #ffe0dd;
+    border-color: #e63946;
+    color: #7f1d1d;
+}
+
+/* ---------- Abas (cadastro) ---------- */
+
+.abas {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.aba {
+    padding: 8px 20px;
+    border: 2px solid #1a2850;
+    border-radius: 20px;
+    color: #1a2850;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.aba:hover {
+    background-color: #e6e6e6;
+}
+
+.aba.ativa {
+    background-color: #1a2850;
+    color: white;
+}
+
+/* ---------- Formulário ---------- */
+
+.formulario {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px 24px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.campo-largo {
+    grid-column: 1 / -1;
+}
+
+.campo label {
+    font-size: 14px;
+}
+
+.campo .obrigatorio {
+    color: #e63946;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+    border: 2px solid #1a2850;
+    border-radius: 20px;
+    background: transparent;
+    color: #222;
+    padding: 8px 14px;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+}
+
+.campo textarea {
+    resize: vertical;
+    min-height: 90px;
+    border-radius: 20px;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+    border-color: #4a6cd4;
+}
+
+.campo-dica {
+    font-size: 12px;
+    color: #8a7f87;
+}
+
+.acoes-formulario {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* ---------- Botões ---------- */
+
+.btn {
+    display: inline-block;
+    padding: 9px 24px;
+    border-radius: 20px;
+    border: 2px solid #1a2850;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.btn-primario {
+    background-color: #1a2850;
+    color: white;
+}
+
+.btn-primario:hover {
+    background-color: #2a3d78;
+}
+
+.btn-secundario {
+    background-color: transparent;
+    color: #1a2850;
+}
+
+.btn-secundario:hover {
+    background-color: #e6e6e6;
+}
+
+.btn:focus-visible,
+.aba:focus-visible {
+    outline: 3px solid #4a6cd4;
+    outline-offset: 2px;
+}
+
+.btn-pequeno {
+    padding: 4px 14px;
+    font-size: 13px;
+}
+
+.btn-perigo {
+    border-color: #e63946;
+    color: #e63946;
+    background-color: transparent;
+}
+
+.btn-perigo:hover {
+    background-color: #ffe0dd;
+}
+
+/* ---------- Tabelas ---------- */
+
+.tabela-rolavel {
+    overflow-x: auto;
+}
+
+.tabela-acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.tabela-acoes form {
+    margin: 0;
+}
+
+.vazio {
+    color: #8a7f87;
+    text-align: center;
+    padding: 24px 0;
+}
+
+.truncar {
+    max-width: 260px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ---------- Pontos e badges extras ---------- */
+
+.azul {
+    background-color: #4a6cd4;
+}
+
+.status-manutencao {
+    background-color: #ffd699;
+}
+
+.status-pendente {
+    background-color: #ffe9a3;
+}
+
+.status-atendimento {
+    background-color: #b3c6ff;
+}
+
+.status-concluido {
+    background-color: #d4d4d4;
+}
+
+/* ---------- Solicitações (visão do administrador) ---------- */
+
+.justificativa {
+    max-width: 260px;
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.35;
+}
+
+.tabela-acoes-larga {
+    max-width: 230px;
+}
+
+td small {
+    display: block;
+    color: #8a7f87;
+    font-size: 12px;
+}

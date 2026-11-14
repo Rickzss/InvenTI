@@ -6,82 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InvenTI - Equipamentos</title>
     <link href="https://fonts.googleapis.com/css2?family=Doto:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/equipamentos.css">
+    <link rel="stylesheet" th:href="@{/css/layout.css}">
+    <link rel="stylesheet" th:href="@{/css/equipamentos.css}">
 </head>
 
 <body>
-    <div class="layout">
 
-        <!-- ================= BARRA LATERAL ================= -->
-        <aside class="barra-lateral">
+    <main class="container">
 
-            <h1 class="logo"><span class="inven">Inven</span>TI</h1>
+        <aside th:replace="~{fragments/menu :: menu('equipamentos')}"></aside>
 
-            <div class="usuario">
-                <div class="avatar">
-                    <svg viewBox="0 0 24 24" width="48" height="48" fill="currentColor" aria-hidden="true">
-                        <circle cx="12" cy="8" r="4.5"></circle>
-                        <path d="M3.5 21c0-4.5 3.8-7 8.5-7s8.5 2.5 8.5 7v0.5h-17z"></path>
-                    </svg>
-                </div>
-                <p class="usuario-nome">Admin</p>
-                <p class="usuario-perfil">Administrador</p>
-            </div>
-
-            <nav class="menu">
-                <ul>
-                    <li>
-                        <a href="#">
-                            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor"
-                                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <path d="M3 11l9-8 9 8"></path>
-                                <path d="M5 10v10h5v-6h4v6h5V10"></path>
-                            </svg>
-                            <span>Home</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/equipamentos" class="ativo">
-                            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor"
-                                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <rect x="2" y="3" width="20" height="14" rx="2"></rect>
-                                <path d="M8 21h8M12 17v4"></path>
-                            </svg>
-                            <span>Equipamentos</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor"
-                                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <circle cx="9" cy="7" r="4"></circle>
-                                <path d="M2 21v-2a5 5 0 0 1 5-5h4"></path>
-                                <path d="M18 14v6M15 17h6"></path>
-                            </svg>
-                            <span>Cadastro</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-
-        </aside>
-
-        <!-- ================= CONTEÚDO ================= -->
-        <main class="conteudo">
+        <section class="conteudo pagina-equipamentos">
 
             <header class="topo-pagina">
                 <div>
                     <h2>Equipamentos</h2>
-                    <p class="contador">128 equipamentos cadastrados</p>
+                    <p class="contador" th:if="${!filtrando}"
+                        th:text="${#lists.size(equipamentos)} + ' equipamentos cadastrados'">0 equipamentos cadastrados</p>
+                    <p class="contador" th:if="${filtrando}"
+                        th:text="${#lists.size(equipamentos)} + ' equipamento(s) encontrado(s) para &quot;' + ${nome} + '&quot;'">0 encontrados</p>
                 </div>
-                <a href="#" class="btn-novo">+ Novo equipamento</a>
+                <a th:href="@{/cadastro(aba='equipamento')}" class="btn-novo">+ Novo equipamento</a>
             </header>
 
             <div class="barra-ferramentas">
 
-                <form class="busca" role="search">
-                    <label for="busca" class="sr-only">Buscar equipamento</label>
-                    <input type="search" id="busca" name="busca" placeholder="Buscar">
+                <!-- Filtro por nome: GET /equipamentos?nome=... -->
+                <form class="busca" role="search" th:action="@{/equipamentos}" method="get">
+                    <label for="busca" class="sr-only">Buscar equipamento pelo nome</label>
+                    <input type="search" id="busca" name="nome" th:value="${nome}" placeholder="Buscar pelo nome" maxlength="150">
                     <button type="submit" aria-label="Buscar">
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" aria-hidden="true">
@@ -89,6 +42,7 @@
                             <path d="M20 20l-3.5-3.5"></path>
                         </svg>
                     </button>
+                    <a th:if="${filtrando}" th:href="@{/equipamentos}" class="limpar-busca">Limpar</a>
                 </form>
 
                 <nav class="paginacao" aria-label="Paginação">
@@ -110,59 +64,38 @@
                             <th>Imagem</th>
                             <th>Cod</th>
                             <th>Categoria</th>
-                            <th>Modelo</th>
+                            <th>Nome</th>
                             <th>Status</th>
-                            <th>Usuário</th>
+                            <th>Setor</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr th:each="e : ${equipamentos}">
                             <td><div class="foto"></div></td>
-                            <td>IVT-SWT-006</td>
-                            <td>Switch</td>
-                            <td class="modelo">Switch 8 portas TP-Link TL-SG108 - Gigabit</td>
-                            <td><span class="status ativo">Ativo</span></td>
-                            <td>TI</td>
+                            <td th:text="${e.patrimonio}">IVT-NTB-001</td>
+                            <td th:text="${e.categoria.nome}">Notebook</td>
+                            <td class="modelo" th:text="${e.nome}">Notebook Dell Latitude 3420</td>
+                            <td>
+                                <span class="status"
+                                    th:classappend="${e.status.name() == 'ATIVO'} ? 'ativo' : (${e.status.name() == 'INATIVO'} ? 'inativo' : 'manutencao')"
+                                    th:text="${e.status.rotulo}">Ativo</span>
+                            </td>
+                            <td th:text="${e.setor != null ? e.setor.nome : '-'}">TI</td>
                         </tr>
-                        <tr>
-                            <td><div class="foto"></div></td>
-                            <td>IVT-IMP-005</td>
-                            <td>Impressora</td>
-                            <td class="modelo">Impressora EcoTank L6490</td>
-                            <td><span class="status ativo">Ativo</span></td>
-                            <td>RH</td>
+                        <tr th:if="${#lists.isEmpty(equipamentos) and !filtrando}">
+                            <td colspan="6">Nenhum equipamento cadastrado. Use &ldquo;+ Novo equipamento&rdquo; para começar.</td>
                         </tr>
-                        <tr>
-                            <td><div class="foto"></div></td>
-                            <td>IVT-NTB-001</td>
-                            <td>Notebook</td>
-                            <td class="modelo">Notebook Dell Latitude 3420</td>
-                            <td><span class="status ativo">Ativo</span></td>
-                            <td>flavio.silva</td>
-                        </tr>
-                        <tr>
-                            <td><div class="foto"></div></td>
-                            <td>IVT-MNT-008</td>
-                            <td>Monitor</td>
-                            <td class="modelo">Monitor LG LED 25" Ultrawide</td>
-                            <td><span class="status inativo">Inativo</span></td>
-                            <td>Null</td>
-                        </tr>
-                        <tr>
-                            <td><div class="foto"></div></td>
-                            <td>IVT-MSE-021</td>
-                            <td>Mouse</td>
-                            <td class="modelo">Mouse gamer sem fio Logitech G Pro-2</td>
-                            <td><span class="status ativo">Ativo</span></td>
-                            <td>eduardo.sousa</td>
+                        <tr th:if="${#lists.isEmpty(equipamentos) and filtrando}">
+                            <td colspan="6">Nenhum equipamento encontrado com esse nome.</td>
                         </tr>
                     </tbody>
                 </table>
             </section>
 
-        </main>
+        </section>
 
-    </div>
+    </main>
+
 </body>
 
 </html>

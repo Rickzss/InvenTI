@@ -6,3 +6,5 @@ Primeira Etapa 01 (22/10): Realizado a primeira parte do projeto com o CRUD bás
 Segunda Etapa 02 (29/10): Tela de login com HTML e CSS (layout, curva e borders), criação de banco de dados (Usuários, Categorias, Setores, Equipamentos, Empréstimos e Histórico).
 
 Terceira Etapa 03 (05/11): Tela de login finalizada e tela de equipamentos adicionada.
+
+Quarta Etapa 04 (12\11): Finalizado as telas do HTML e CSS.
