@@ -7,4 +7,6 @@ Segunda Etapa 02 (29/10): Tela de login com HTML e CSS (layout, curva e borders)
 
 Terceira Etapa 03 (05/11): Tela de login finalizada e tela de equipamentos adicionada.
 
-Quarta Etapa 04 (12\11): Finalizado as telas do HTML e CSS.
+Quarta Etapa 04 1/2 (12\11): Finalizado as telas do HTML e CSS.
+
+Quarta Etapa 04 2/2 (15/11): Inserido o back-end 
