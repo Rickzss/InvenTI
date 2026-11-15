@@ -10,3 +10,4 @@ Terceira Etapa 03 (05/11): Tela de login finalizada e tela de equipamentos adici
 Quarta Etapa 04 1/2 (12\11): Finalizado as telas do HTML e CSS.
 
 Quarta Etapa 04 2/2 (15/11): Inserido o back-end 
+

@@ -11,23 +11,23 @@
 
         <header class="perfil">
             <h1 class="logo"><span class="inven">Inven</span>TI</h1>
-            <div class="avatar"></div>
+            <div class="avatar"><img th:src="@{/images/menu/admin.png}" alt="" width="40" height="40"></div>
             <p class="nome" th:text="${usuarioLogado.nome}">Admin</p>
             <p class="cargo" th:text="${usuarioLogado.perfil.rotulo}">Administrador</p>
         </header>
 
         <nav class="navegacao">
             <ul th:if="${usuarioLogado.administrador}">
-                <li><a th:href="@{/home}" th:classappend="${ativo == 'home'} ? 'ativo'">Home</a></li>
-                <li><a th:href="@{/equipamentos}" th:classappend="${ativo == 'equipamentos'} ? 'ativo'">Equipamentos</a></li>
-                <li><a th:href="@{/usuarios}" th:classappend="${ativo == 'usuarios'} ? 'ativo'">Usuários</a></li>
-                <li><a th:href="@{/solicitacoes}" th:classappend="${ativo == 'solicitacoes'} ? 'ativo'">Solicitações</a></li>
-                <li><a th:href="@{/cadastro}" th:classappend="${ativo == 'cadastro'} ? 'ativo'">Cadastro</a></li>
-                <li><a th:href="@{/logout}">Sair</a></li>
+                <li><a th:href="@{/home}" th:classappend="${ativo == 'home'} ? 'ativo'"><img class="icone" th:src="@{/images/menu/home.png}" alt="" width="25" height="25"><span>Home</span></a></li>
+                <li><a th:href="@{/equipamentos}" th:classappend="${ativo == 'equipamentos'} ? 'ativo'"><img class="icone" th:src="@{/images/menu/equipamentos.png}" alt="" width="25" height="25"><span>Equipamentos</span></a></li>
+                <li><a th:href="@{/usuarios}" th:classappend="${ativo == 'usuarios'} ? 'ativo'"><img class="icone" th:src="@{/images/menu/usuarios.png}" alt="" width="25" height="25"><span>Usuários</span></a></li>
+                <li><a th:href="@{/solicitacoes}" th:classappend="${ativo == 'solicitacoes'} ? 'ativo'"><img class="icone" th:src="@{/images/menu/solicitacoes.png}" alt="" width="25" height="25"><span>Solicitações</span></a></li>
+                <li><a th:href="@{/cadastro}" th:classappend="${ativo == 'cadastro'} ? 'ativo'"><img class="icone" th:src="@{/images/menu/cadastro.png}" alt="" width="25" height="25"><span>Cadastro</span></a></li>
+                <li><a th:href="@{/logout}"><img class="icone" th:src="@{/images/menu/exit.png}" alt="" width="25" height="25"><span>Sair</span></a></li>
             </ul>
             <ul th:unless="${usuarioLogado.administrador}">
-                <li><a th:href="@{/solicitacao}" class="ativo">Solicitações</a></li>
-                <li><a th:href="@{/logout}">Sair</a></li>
+                <li><a th:href="@{/solicitacao}" class="ativo"><img class="icone" th:src="@{/images/menu/solicitacoes.png}" alt="" width="25" height="25"><span>Solicitações</span></a></li>
+                <li><a th:href="@{/logout}"><img class="icone" th:src="@{/images/menu/exit.png}" alt="" width="25" height="25"><span>Sair</span></a></li>
             </ul>
         </nav>
 
