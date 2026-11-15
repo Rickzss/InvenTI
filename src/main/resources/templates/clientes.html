@@ -16,6 +16,14 @@
 </head>
 <body>
 
+    <p class="navegacao-legado">
+        <a th:href="@{/home}">Home</a> |
+        <a th:href="@{/equipamentos}">Equipamentos</a> |
+        <a th:href="@{/usuarios}">Usuários</a> |
+        <a th:href="@{/cadastro}">Cadastro</a> |
+        <a th:href="@{/logout}">Sair</a>
+    </p>
+
     <h2 th:text="${cliente.id == null} ? 'Novo Cliente' : 'Editar Cliente'">Novo Cliente</h2>
 
     <form th:action="@{/clientes}" th:object="${cliente}" method="POST">

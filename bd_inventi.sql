@@ -149,3 +149,64 @@ CREATE TABLE historico (
 DESCRIBE historico;
 
 
+
+
+-- =====================================================================
+-- ETAPA 04 - Script complementar (Cadastro, Usuários e Solicitações)
+-- Use este bloco apenas se for rodar a aplicação em MySQL (ver
+-- application.properties). No H2 padrão o Hibernate cria as tabelas.
+-- =====================================================================
+
+-- 1) Setor do usuário (tela Usuários / Cadastro de usuário)
+ALTER TABLE usuarios
+    ADD COLUMN setor_id INT NULL,
+    ADD CONSTRAINT fk_usuario_setor
+        FOREIGN KEY (setor_id) REFERENCES setores(id);
+
+-- 2) Novo status "Em manutenção" para equipamentos (mantém os antigos)
+ALTER TABLE equipamentos
+    MODIFY status ENUM('ATIVO', 'EM_MANUTENCAO', 'INATIVO', 'EMPRESTADO', 'DISPONIVEL')
+        NOT NULL DEFAULT 'ATIVO';
+
+-- 3) Setores e tipos usados nos formulários
+INSERT IGNORE INTO setores (nome, descricao) VALUES ('Financeiro', 'Financeiro'), ('Operações', 'Operações');
+INSERT IGNORE INTO categorias (nome, descricao) VALUES ('Switch', 'Switches de rede');
+
+-- 4) Solicitações de equipamento/suporte (portal do solicitante)
+CREATE TABLE solicitacoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    usuario_id INT NOT NULL,
+    categoria_id INT NOT NULL,
+    setor_id INT NOT NULL,
+
+    justificativa VARCHAR(500) NOT NULL,
+
+    urgencia ENUM('BAIXA', 'MEDIA', 'ALTA')
+        NOT NULL DEFAULT 'MEDIA',
+
+    status ENUM('PENDENTE', 'APROVADO', 'EM_ATENDIMENTO', 'CONCLUIDO')
+        NOT NULL DEFAULT 'PENDENTE',
+
+    data_solicitacao DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_solicitacao_usuario
+        FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    CONSTRAINT fk_solicitacao_categoria
+        FOREIGN KEY (categoria_id) REFERENCES categorias(id),
+    CONSTRAINT fk_solicitacao_setor
+        FOREIGN KEY (setor_id) REFERENCES setores(id)
+);
+
+DESCRIBE solicitacoes;
+
+-- 5) Novo status "Recusado" nas solicitações (botão Recusar do administrador)
+ALTER TABLE solicitacoes
+    MODIFY status ENUM('PENDENTE', 'APROVADO', 'EM_ATENDIMENTO', 'CONCLUIDO', 'RECUSADO')
+        NOT NULL DEFAULT 'PENDENTE';
+
+
+-- Perfis: 'ADMINISTRADOR' vê o menu completo; 'USUARIO' (solicitante) é
+-- redirecionado exclusivamente para /solicitacao.
+-- Os usuários iniciais (admin@inventi.com / solicitante@inventi.com) são
+-- criados pela aplicação na primeira execução, com a senha já em hash.

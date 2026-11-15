@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvenTI - Equipamentos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/layout.css}">
+    <link rel="stylesheet" th:href="@{/css/equipamentos.css}">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <aside th:replace="~{fragments/menu :: menu('equipamentos')}"></aside>
+
+        <section class="conteudo pagina-equipamentos">
+
+            <header class="topo-pagina">
+                <div>
+                    <h2>Equipamentos</h2>
+                    <p class="contador" th:if="${!filtrando}"
+                        th:text="${#lists.size(equipamentos)} + ' equipamentos cadastrados'">0 equipamentos cadastrados</p>
+                    <p class="contador" th:if="${filtrando}"
+                        th:text="${#lists.size(equipamentos)} + ' equipamento(s) encontrado(s) para &quot;' + ${nome} + '&quot;'">0 encontrados</p>
+                </div>
+                <a th:href="@{/cadastro(aba='equipamento')}" class="btn-novo">+ Novo equipamento</a>
+            </header>
+
+            <div class="barra-ferramentas">
+
+                <!-- Filtro por nome: GET /equipamentos?nome=... -->
+                <form class="busca" role="search" th:action="@{/equipamentos}" method="get">
+                    <label for="busca" class="sr-only">Buscar equipamento pelo nome</label>
+                    <input type="search" id="busca" name="nome" th:value="${nome}" placeholder="Buscar pelo nome" maxlength="150">
+                    <button type="submit" aria-label="Buscar">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                            <circle cx="11" cy="11" r="7"></circle>
+                            <path d="M20 20l-3.5-3.5"></path>
+                        </svg>
+                    </button>
+                    <a th:if="${filtrando}" th:href="@{/equipamentos}" class="limpar-busca">Limpar</a>
+                </form>
+
+                <nav class="paginacao" aria-label="Paginação">
+                    <a href="#">Início</a>
+                    <a href="#">Fim</a>
+                    <a href="#" class="atual">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">Próximo</a>
+                    <a href="#">Anterior</a>
+                </nav>
+
+            </div>
+
+            <section class="card-tabela">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Imagem</th>
+                            <th>Cod</th>
+                            <th>Categoria</th>
+                            <th>Nome</th>
+                            <th>Status</th>
+                            <th>Setor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="e : ${equipamentos}">
+                            <td><div class="foto"></div></td>
+                            <td th:text="${e.patrimonio}">IVT-NTB-001</td>
+                            <td th:text="${e.categoria.nome}">Notebook</td>
+                            <td class="modelo" th:text="${e.nome}">Notebook Dell Latitude 3420</td>
+                            <td>
+                                <span class="status"
+                                    th:classappend="${e.status.name() == 'ATIVO'} ? 'ativo' : (${e.status.name() == 'INATIVO'} ? 'inativo' : 'manutencao')"
+                                    th:text="${e.status.rotulo}">Ativo</span>
+                            </td>
+                            <td th:text="${e.setor != null ? e.setor.nome : '-'}">TI</td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(equipamentos) and !filtrando}">
+                            <td colspan="6">Nenhum equipamento cadastrado. Use &ldquo;+ Novo equipamento&rdquo; para começar.</td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(equipamentos) and filtrando}">
+                            <td colspan="6">Nenhum equipamento encontrado com esse nome.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

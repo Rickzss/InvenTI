@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvenTI - Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/layout.css}">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/formularios.css}">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <aside th:replace="~{fragments/menu :: menu('home')}"></aside>
+
+        <section class="conteudo">
+
+            <section class="cards-resumo">
+
+                <article class="card">
+                    <h2>Equipamentos</h2>
+                    <p class="numero"><span class="ponto verde"></span><span th:text="${totalEquipamentos}">128</span></p>
+                </article>
+
+                <article class="card">
+                    <h2>Usuários</h2>
+                    <p class="numero"><span class="ponto verde"></span><span th:text="${totalUsuarios}">25</span></p>
+                </article>
+
+                <article class="card">
+                    <h2>Em manutenção</h2>
+                    <p class="numero"><span class="ponto laranja"></span><span th:text="${emManutencao}">7</span></p>
+                </article>
+
+                <article class="card">
+                    <h2>Inativos</h2>
+                    <p class="numero"><span class="ponto vermelho"></span><span th:text="${inativos}">5</span></p>
+                </article>
+
+            </section>
+
+            <section class="graficos">
+
+                <article class="painel">
+                    <h2>Equipamentos por tipo</h2>
+
+                    <div class="barra-item" th:each="b : ${porTipo}">
+                        <div class="barra-info">
+                            <span th:text="${b.rotulo}">Notebook</span>
+                            <span th:text="${b.total}">32</span>
+                        </div>
+                        <div class="barra">
+                            <div class="barra-preenchida azul-claro" th:style="'width: ' + ${b.percentual} + '%'"></div>
+                        </div>
+                    </div>
+
+                    <p class="vazio" th:if="${#lists.isEmpty(porTipo)}">Nenhum equipamento cadastrado ainda.</p>
+
+                </article>
+
+                <article class="painel">
+                    <h2>Equipamentos por setor</h2>
+
+                    <div class="barra-item" th:each="b : ${porSetor}">
+                        <div class="barra-info">
+                            <span th:text="${b.rotulo}">TI</span>
+                            <span th:text="${b.total}">56</span>
+                        </div>
+                        <div class="barra">
+                            <div class="barra-preenchida azul-escuro" th:style="'width: ' + ${b.percentual} + '%'"></div>
+                        </div>
+                    </div>
+
+                    <p class="vazio" th:if="${#lists.isEmpty(porSetor)}">Nenhum equipamento cadastrado ainda.</p>
+
+                </article>
+
+            </section>
+
+            <article class="painel painel-tabela">
+                <h2>Últimos equipamentos cadastrados</h2>
+
+                <div class="tabela-rolavel">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Tipo</th>
+                                <th>Setor</th>
+                                <th>Status</th>
+                                <th>Cadastro</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="e : ${ultimos}">
+                                <td th:text="${e.nome}">Dell Latitude 5540</td>
+                                <td th:text="${e.categoria.nome}">Notebook</td>
+                                <td th:text="${e.setor != null ? e.setor.nome : '-'}">TI</td>
+                                <td><span class="status" th:classappend="${e.status.classeCss}" th:text="${e.status.rotulo}">Ativo</span></td>
+                                <td class="data" th:text="${e.dataCadastro != null ? #temporals.format(e.dataCadastro, 'dd/MM/yyyy') : '-'}">25/09/2026</td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(ultimos)}">
+                                <td colspan="5" class="vazio">Nenhum equipamento cadastrado. Use a tela de Cadastro para adicionar o primeiro.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

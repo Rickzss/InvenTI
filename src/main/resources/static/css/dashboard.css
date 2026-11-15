@@ -1,0 +1,151 @@
+/*
+ * Componentes do dashboard (cards, gráficos, tabelas e badges).
+ * A estrutura (container, menu lateral, conteúdo) fica em layout.css.
+ */
+
+.cards-resumo {
+    display: flex;
+    gap: 25px;
+}
+
+.card {
+    flex: 1;
+    min-width: 0;
+    background-color: #1a2850;
+    color: white;
+    padding: 20px;
+    min-height: 125px; /* cresce se o título quebrar de linha, em vez de vazar */
+}
+
+.card h2 {
+    font-size: 16px;
+    font-weight: normal;
+    color: #9a95a0;
+    margin-bottom: 10px;
+}
+
+.numero {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 48px;
+}
+
+.ponto {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.verde {
+    background-color: #2ecc40;
+}
+
+.laranja {
+    background-color: #ff9f1c;
+}
+
+.vermelho {
+    background-color: #e63946;
+}
+
+.graficos {
+    display: flex;
+    gap: 25px;
+    margin-top: 25px;
+    margin-bottom: 25px; /* separa os gráficos do painel seguinte (tabela) */
+}
+
+.painel {
+    flex: 1;
+    min-width: 0;
+    background-color: white;
+    border-radius: 30px;
+    padding: 25px 20px;
+}
+
+.painel h2 {
+    font-size: 16px;
+    font-weight: normal;
+    margin-bottom: 15px;
+}
+
+.barra-item {
+    margin-bottom: 12px;
+}
+
+.barra-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.barra {
+    height: 8px;
+    background-color: #e6e6e6;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.barra-preenchida {
+    height: 100%;
+    border-radius: 10px;
+}
+
+.azul-claro {
+    background-color: #4a6cd4;
+}
+
+.azul-escuro {
+    background-color: #1a2850;
+}
+
+.painel-tabela {
+    margin-top: 25px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    font-weight: normal;
+    font-size: 14px;
+    color: #8a7f87;
+    padding: 10px 0;
+}
+
+td {
+    font-size: 14px;
+    padding: 12px 0;
+    border-top: 1px solid #e6e6e6;
+}
+
+.data {
+    color: #8a7f87;
+}
+
+.status {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+.status-ativo {
+    background-color: #8df0a0;
+}
+
+.status-inativo {
+    background-color: #ff8a80;
+}
+
+/* Telas estreitas: gráficos um embaixo do outro */
+@media (max-width: 700px) {
+    .graficos {
+        flex-direction: column;
+    }
+}

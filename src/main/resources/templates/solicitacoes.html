@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvenTI - Solicitações</title>
+    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/layout.css}">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/formularios.css}">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <aside th:replace="~{fragments/menu :: menu('solicitacoes')}"></aside>
+
+        <section class="conteudo">
+
+            <div class="alerta alerta-sucesso" role="status" th:if="${mensagem}" th:text="${mensagem}"></div>
+            <div class="alerta alerta-erro" role="alert" th:if="${erro}" th:text="${erro}"></div>
+
+            <section class="cards-resumo">
+
+                <article class="card">
+                    <h2>Total de solicitações</h2>
+                    <p class="numero"><span class="ponto azul"></span><span th:text="${total}">12</span></p>
+                </article>
+
+                <article class="card">
+                    <h2>Pendentes</h2>
+                    <p class="numero"><span class="ponto laranja"></span><span th:text="${pendentes}">4</span></p>
+                </article>
+
+                <article class="card">
+                    <h2>Em atendimento</h2>
+                    <p class="numero"><span class="ponto verde"></span><span th:text="${emAtendimento}">3</span></p>
+                </article>
+
+                <article class="card">
+                    <h2>Concluídas</h2>
+                    <p class="numero"><span class="ponto vermelho"></span><span th:text="${concluidas}">5</span></p>
+                </article>
+
+            </section>
+
+            <article class="painel painel-tabela">
+                <h2>Solicitações dos colaboradores</h2>
+                <p class="painel-sub">Atualize o status de cada pedido. A mudança aparece na hora na tela do solicitante.</p>
+
+                <nav class="abas" aria-label="Filtrar por status">
+                    <a th:href="@{/solicitacoes}" class="aba" th:classappend="${filtro == null} ? 'ativa'"
+                        th:text="'Todas (' + ${total} + ')'">Todas</a>
+                    <a th:each="st : ${statusOpcoes}" th:href="@{/solicitacoes(status=${st.name()})}" class="aba"
+                        th:classappend="${filtro == st} ? 'ativa'"
+                        th:text="${st.rotulo} + ' (' + ${contagens.get(st)} + ')'">Pendente</a>
+                </nav>
+
+                <div class="tabela-rolavel">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Solicitante</th>
+                                <th>Equipamento</th>
+                                <th>Setor</th>
+                                <th>Urgência</th>
+                                <th>Justificativa</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="s : ${solicitacoes}">
+                                <td class="data" th:text="${#temporals.format(s.dataSolicitacao, 'dd/MM/yyyy HH:mm')}">30/09/2026 10:15</td>
+                                <td>
+                                    <span th:text="${s.solicitante.nome}">Ricardo Passos</span>
+                                    <small th:text="${s.solicitante.email}">solicitante@inventi.com</small>
+                                </td>
+                                <td th:text="${s.categoria.nome}">Notebook</td>
+                                <td th:text="${s.setor.nome}">RH</td>
+                                <td><span class="status" th:classappend="${s.urgencia.classeCss}" th:text="${s.urgencia.rotulo}">Média</span></td>
+                                <td class="justificativa" th:text="${s.justificativa}">Trabalho remoto</td>
+                                <td><span class="status" th:classappend="${s.status.classeCss}" th:text="${s.status.rotulo}">Pendente</span></td>
+                                <td>
+                                    <div class="tabela-acoes tabela-acoes-larga">
+                                        <form th:each="st : ${statusOpcoes}" th:unless="${st == s.status}"
+                                            th:action="@{/solicitacoes/{id}/status(id=${s.id})}" method="post">
+                                            <input type="hidden" name="status" th:value="${st.name()}">
+                                            <input type="hidden" name="filtro" th:value="${filtro != null ? filtro.name() : ''}">
+                                            <button type="submit" class="btn btn-pequeno"
+                                                th:classappend="${st.name() == 'RECUSADO'} ? 'btn-perigo' : 'btn-secundario'"
+                                                th:text="${st.acao}">Aprovar</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(solicitacoes)}">
+                                <td colspan="8" class="vazio">Nenhuma solicitação encontrada.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>
