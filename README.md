@@ -11,3 +11,7 @@ Quarta Etapa 04 1/2 (12\11): Finalizado as telas do HTML e CSS.
 
 Quarta Etapa 04 2/2 (15/11): Inserido o back-end 
 
+Quinta Etapa 05 (15/11): Pequenos ajustes no HTML
+
+Sexta Etapa 06 (19/11): Integrado o banco de dados no back-end
+
